@@ -17,6 +17,7 @@ public class TaskResponseDto {
     private final Priority priority;
     private final Long projectId;
     private final String projectName;
+    private final String ownerEmail;
 
     // Konstruktor nimmt direkt eine Task-Entity entgegen und mappt die Felder
     public TaskResponseDto(Task task) {
@@ -28,5 +29,6 @@ public class TaskResponseDto {
         this.priority    = task.getPriority();
         this.projectId   = task.getProject() != null ? task.getProject().getId()   : null;
         this.projectName = task.getProject() != null ? task.getProject().getName() : null;
+        this.ownerEmail  = task.getOwner()   != null ? task.getOwner().getEmail()  : null;
     }
 }
