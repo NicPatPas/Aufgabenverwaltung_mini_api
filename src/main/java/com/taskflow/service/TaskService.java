@@ -2,6 +2,7 @@ package com.taskflow.service;
 
 import com.taskflow.dto.TaskRequestDto;
 import com.taskflow.dto.TaskResponseDto;
+import com.taskflow.dto.TaskStatsDto;
 import com.taskflow.entity.Priority;
 import com.taskflow.entity.Task;
 import com.taskflow.exception.TaskNotFoundException;
@@ -81,6 +82,21 @@ public class TaskService {
     public void deleteTask(Long id) {
         findTaskOrThrow(id);
         taskRepository.deleteById(id);
+    }
+
+    // Statistik: Gesamtanzahl, erledigt, offen
+    public TaskStatsDto getStats() {
+        long total = taskRepository.count();
+        long done  = taskRepository.countByDone(true);
+        return new TaskStatsDto(total, done);
+    }
+
+    // Suche nach Titel (Groß-/Kleinschreibung egal)
+    public List<TaskResponseDto> searchByTitle(String title) {
+        return taskRepository.findByTitleContainingIgnoreCase(title)
+                .stream()
+                .map(TaskResponseDto::new)
+                .toList();
     }
 
     // Hilfsmethode: Task laden oder Exception werfen

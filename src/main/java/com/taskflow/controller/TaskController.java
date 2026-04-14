@@ -2,6 +2,7 @@ package com.taskflow.controller;
 
 import com.taskflow.dto.TaskRequestDto;
 import com.taskflow.dto.TaskResponseDto;
+import com.taskflow.dto.TaskStatsDto;
 import com.taskflow.entity.Priority;
 import com.taskflow.service.TaskService;
 import jakarta.validation.Valid;
@@ -29,6 +30,20 @@ public class TaskController {
             @RequestParam(required = false) Priority priority
     ) {
         return ResponseEntity.ok(taskService.getAllTasks(done, priority));
+    }
+
+    // GET /api/tasks/stats
+    @GetMapping("/stats")
+    public ResponseEntity<TaskStatsDto> getStats() {
+        return ResponseEntity.ok(taskService.getStats());
+    }
+
+    // GET /api/tasks/search?title=spring
+    @GetMapping("/search")
+    public ResponseEntity<List<TaskResponseDto>> searchByTitle(
+            @RequestParam String title
+    ) {
+        return ResponseEntity.ok(taskService.searchByTitle(title));
     }
 
     // GET /api/tasks/{id}

@@ -18,4 +18,10 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // Kombination: nach done UND Priorität filtern
     List<Task> findByDoneAndPriority(boolean done, Priority priority);
+
+    // Anzahl erledigter Tasks zählen (für Statistik)
+    long countByDone(boolean done);
+
+    // Tasks nach Titel durchsuchen, Groß-/Kleinschreibung egal (für Suche)
+    List<Task> findByTitleContainingIgnoreCase(String title);
 }
