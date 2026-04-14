@@ -23,4 +23,7 @@ public class TaskRequestDto {
 
     @NotNull(message = "Priorität darf nicht null sein")
     private Priority priority;
+
+    // Optional: Task einem Projekt zuweisen
+    private Long projectId;
 }

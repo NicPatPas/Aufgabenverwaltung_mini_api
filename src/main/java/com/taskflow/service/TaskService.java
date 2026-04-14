@@ -17,6 +17,7 @@ import java.util.List;
 public class TaskService {
 
     private final TaskRepository taskRepository;
+    private final ProjectService projectService;
 
     // Alle Tasks holen – optional nach done und/oder priority filtern
     public List<TaskResponseDto> getAllTasks(Boolean done, Priority priority) {
@@ -52,6 +53,10 @@ public class TaskService {
         task.setPriority(dto.getPriority());
         // done bleibt false (Default aus der Entity)
 
+        if (dto.getProjectId() != null) {
+            task.setProject(projectService.findProjectOrThrow(dto.getProjectId()));
+        }
+
         Task saved = taskRepository.save(task);
         return new TaskResponseDto(saved);
     }
@@ -64,6 +69,12 @@ public class TaskService {
         task.setDescription(dto.getDescription());
         task.setDeadline(dto.getDeadline());
         task.setPriority(dto.getPriority());
+
+        if (dto.getProjectId() != null) {
+            task.setProject(projectService.findProjectOrThrow(dto.getProjectId()));
+        } else {
+            task.setProject(null); // Projekt-Zuweisung entfernen
+        }
 
         Task saved = taskRepository.save(task);
         return new TaskResponseDto(saved);

@@ -15,6 +15,8 @@ public class TaskResponseDto {
     private final LocalDate deadline;
     private final boolean done;
     private final Priority priority;
+    private final Long projectId;
+    private final String projectName;
 
     // Konstruktor nimmt direkt eine Task-Entity entgegen und mappt die Felder
     public TaskResponseDto(Task task) {
@@ -24,5 +26,7 @@ public class TaskResponseDto {
         this.deadline    = task.getDeadline();
         this.done        = task.isDone();
         this.priority    = task.getPriority();
+        this.projectId   = task.getProject() != null ? task.getProject().getId()   : null;
+        this.projectName = task.getProject() != null ? task.getProject().getName() : null;
     }
 }

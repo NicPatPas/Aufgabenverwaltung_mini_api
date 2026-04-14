@@ -24,4 +24,7 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 
     // Tasks nach Titel durchsuchen, Groß-/Kleinschreibung egal (für Suche)
     List<Task> findByTitleContainingIgnoreCase(String title);
+
+    // Alle Tasks eines Projekts holen
+    List<Task> findByProject_Id(Long projectId);
 }
